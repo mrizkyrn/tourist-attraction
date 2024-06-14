@@ -1,24 +1,11 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-import { useUser } from '../../context/UserContext';
+import Cookies from 'js-cookie';
 
-const Layout: React.FC = () => {
-   const { user, setUser } = useUser();
+const MainLayout: React.FC = () => {
    const navigate = useNavigate();
-   console.log('User:', user);
-
-   // Mocking the user data   
-   useEffect(() => {
-      // Simulating a user object from some authentication mechanism
-      const currentUser: any = {
-         full_name: 'Example User',
-         email: 'user@example.com',
-         username: 'exampleuser',
-         role: 'USER',
-      };
-      setUser(currentUser);
-   }, [setUser]);
+   const user = Cookies.get('user');
 
    // if user is not logged in, redirect to signin page
    useEffect(() => {
@@ -37,4 +24,4 @@ const Layout: React.FC = () => {
    );
 };
 
-export default Layout;
+export default MainLayout;

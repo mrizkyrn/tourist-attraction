@@ -7,7 +7,6 @@ import NotFound from './pages/NotFound.js';
 import MainLayout from './component/layouts/MainLayout.jsx';
 import Home from './pages/Home.jsx';
 import './index.css';
-import { UserProvider } from './context/UserContext.js';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -36,9 +35,7 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-   <UserProvider>
-      <React.StrictMode>
-         <RouterProvider router={router} />
-      </React.StrictMode>
-   </UserProvider>
+   <React.StrictMode>
+      <RouterProvider router={router} />
+   </React.StrictMode>
 );

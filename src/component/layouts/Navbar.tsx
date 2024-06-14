@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logout } from '../../api/user';
-import { useUser } from '../../context/UserContext';
 import { HomeIcon } from '../icons/Icons';
 import DialogAlert from '../helpers/DialogAlert';
+import Cookies from 'js-cookie';
 
 interface NavbarItem {
    name: string;
@@ -30,10 +30,12 @@ const NavbarItems = (): NavbarItem[] => [
 ];
 
 const Navbar: React.FC = () => {
-   const { user } = useUser();
    const [isAlertOpen, setIsAlertOpen] = useState(false);
    const navigate = useNavigate();
-   const { full_name, email, username } = user || { full_name: 'User', email: '', username: '' };
+   const user = Cookies.get('user');
+   const full_name = user ? JSON.parse(user).full_name : '';
+   const username = user ? JSON.parse(user).username : '';
+   const email = user ? JSON.parse(user).email : '';
 
    const handleLogout = async () => {
       try {
@@ -41,6 +43,9 @@ const Navbar: React.FC = () => {
          console.log('Logout response:', res);
 
          if (res.success) {
+            Cookies.remove('user');
+            Cookies.remove('access_token');
+
             navigate('/signin');
          } else {
             // Handle signout failure

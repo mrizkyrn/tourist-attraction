@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { register } from '../api/user';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 const SignUp: React.FC = () => {
    const [formData, setFormData] = useState({
@@ -12,6 +13,14 @@ const SignUp: React.FC = () => {
       role: 'USER',
    });
    const navigate = useNavigate();
+   const user = Cookies.get('user');
+
+   useEffect(() => {
+      if (user) {
+         console.log('User is already logged in. Redirecting to home page...');
+         navigate('/');
+      }
+   }, [user, navigate]);
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;

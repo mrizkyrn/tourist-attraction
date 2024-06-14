@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api/user';
-import { useUser } from '../context/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 const SignIn: React.FC = () => {
    const [formData, setFormData] = useState({
       username: '',
       password: '',
    });
-   const { setUser } = useUser();
    const navigate = useNavigate();
+   const user = Cookies.get('user');
+
+   useEffect(() => {
+      if (user) {
+         console.log('User is already logged in. Redirecting to home page...');
+         navigate('/');
+      }
+   }, [user, navigate]);
 
    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
@@ -25,9 +32,10 @@ const SignIn: React.FC = () => {
       try {
          const data = await login(formData);
          if (data.success) {
-            setUser(data.data); // Store the user data in the context
+            Cookies.set('user', JSON.stringify(data.data));
+            Cookies.set('access_token', data.data.token);
             console.log('User signed in successfully:', data.data);
-            navigate('/'); // Redirect to home or another page
+            navigate('/');
          } else {
             toast.error(data.message, {
                theme: 'colored',
