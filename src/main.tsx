@@ -9,6 +9,12 @@ import Home from './pages/Home.jsx';
 import './index.css';
 
 import 'react-toastify/dist/ReactToastify.min.css';
+import UserList from './pages/UserList.js';
+import UpdateUser from './pages/UpdateUser.js';
+import ChangePassword from './pages/ChangePassword.js';
+import CreateTouristAttraction from './pages/CreateTouristAttraction.js';
+import SearchTouristAttractions from './pages/SearchTouristAttraction.js';
+import TouristAttractionDetail from './pages/TouristAttractionDetail.js';
 
 const router = createBrowserRouter([
    {
@@ -18,6 +24,30 @@ const router = createBrowserRouter([
             path: '/',
             element: <Home />,
          },
+         {
+            path: '/edit-profile',
+            element: <UpdateUser />,
+         },
+         {
+            path: '/change-password',
+            element: <ChangePassword />,
+         },
+         {
+            path: '/user-list',
+            element: <UserList />,
+         },
+         {
+            path: '/tourist-attraction/create',
+            element: <CreateTouristAttraction />,
+         },
+         {
+            path: 'tourist-attractions',
+            element: <SearchTouristAttractions />,
+         },
+         {
+            path: 'tourist-attractions/:id',
+            element: <TouristAttractionDetail />,
+         }
       ],
    },
    {
