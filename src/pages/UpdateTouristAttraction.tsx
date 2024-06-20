@@ -1,9 +1,12 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { create } from '../api/tourist-attraction';
+import { update, getDetails } from '../api/tourist-attraction';
 import Container from '../component/layouts/Container';
 
-const CreateTouristAttraction: React.FC = () => {
+const UpdateTouristAttraction: React.FC = () => {
+   const { id } = useParams<{ id: string | undefined }>();
+
    const [formData, setFormData] = useState({
       thumbnail: new File([], ''),
       name: '',
@@ -20,6 +23,24 @@ const CreateTouristAttraction: React.FC = () => {
       longitude: '',
    });
 
+   useEffect(() => {
+      const fetchTouristAttraction = async () => {
+         const response = await getDetails(Number(id));
+         if (response.success) {
+            setFormData({
+               ...response.data,
+               thumbnail: new File([], ''), // Assuming thumbnail is a string URL, you'll need to handle it appropriately
+            });
+         } else {
+            toast.error(response.message, {
+               theme: 'colored',
+               position: 'top-left',
+            });
+         }
+      };
+      fetchTouristAttraction();
+   }, [id]);
+
    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
    };
@@ -34,7 +55,6 @@ const CreateTouristAttraction: React.FC = () => {
       e.preventDefault();
 
       const data = new FormData();
-      data.append('thumbnail', formData.thumbnail);
       data.append('name', formData.name);
       data.append('description', formData.description);
       data.append('category', formData.category);
@@ -48,7 +68,7 @@ const CreateTouristAttraction: React.FC = () => {
       formData.latitude && data.append('latitude', formData.latitude);
       formData.longitude && data.append('longitude', formData.longitude);
 
-      const response = await create(data);
+      const response = await update(Number(id), data);
 
       if (response.success) {
          toast.success(response.message, {
@@ -65,7 +85,7 @@ const CreateTouristAttraction: React.FC = () => {
 
    return (
       <Container>
-         <h1 className="text-white text-2xl font-semibold mb-5">Create Tourist Attraction</h1>
+         <h1 className="text-white text-2xl font-semibold mb-5">Update Tourist Attraction</h1>
          <form onSubmit={handleSubmit} encType="multipart/form-data">
             <div className="grid grid-cols-2 gap-5">
                <div>
@@ -76,7 +96,6 @@ const CreateTouristAttraction: React.FC = () => {
                      type="file"
                      name="thumbnail"
                      id="thumbnail"
-                     required
                      onChange={handleFileChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
                   />
@@ -89,6 +108,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="name"
                      id="name"
+                     value={formData.name}
                      required
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
@@ -103,6 +123,7 @@ const CreateTouristAttraction: React.FC = () => {
                   <textarea
                      name="description"
                      id="description"
+                     value={formData.description}
                      required
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
@@ -116,6 +137,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="category"
                      id="category"
+                     value={formData.category}
                      required
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
@@ -131,6 +153,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="tags"
                      id="tags"
+                     value={formData.tags}
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
                   />
@@ -143,6 +166,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="number"
                      name="entrance_fee"
                      id="entrance_fee"
+                     value={formData.entrance_fee}
                      required
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
@@ -158,6 +182,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="address"
                      id="address"
+                     value={formData.address}
                      required
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
@@ -171,6 +196,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="city"
                      id="city"
+                     value={formData.city}
                      required
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
@@ -186,6 +212,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="province"
                      id="province"
+                     value={formData.province}
                      required
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
@@ -199,6 +226,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="country"
                      id="country"
+                     value={formData.country}
                      required
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
@@ -214,6 +242,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="postal_code"
                      id="postal_code"
+                     value={formData.postal_code}
                      required
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
@@ -227,6 +256,7 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="latitude"
                      id="latitude"
+                     value={formData.latitude}
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
                   />
@@ -241,13 +271,14 @@ const CreateTouristAttraction: React.FC = () => {
                      type="text"
                      name="longitude"
                      id="longitude"
+                     value={formData.longitude}
                      onChange={handleChange}
                      className="w-full bg-gray-800 text-white p-2 rounded"
                   />
                </div>
             </div>
             <button type="submit" className="mt-5 bg-blue-500 text-white p-2 rounded">
-               Create Tourist Attraction
+               Update Tourist Attraction
             </button>
          </form>
 
@@ -256,4 +287,4 @@ const CreateTouristAttraction: React.FC = () => {
    );
 };
 
-export default CreateTouristAttraction;
+export default UpdateTouristAttraction;

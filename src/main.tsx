@@ -15,6 +15,7 @@ import ChangePassword from './pages/ChangePassword.js';
 import CreateTouristAttraction from './pages/CreateTouristAttraction.js';
 import SearchTouristAttractions from './pages/SearchTouristAttraction.js';
 import TouristAttractionDetail from './pages/TouristAttractionDetail.js';
+import UpdateTouristAttraction from './pages/UpdateTouristAttraction.js';
 
 const router = createBrowserRouter([
    {
@@ -37,8 +38,12 @@ const router = createBrowserRouter([
             element: <UserList />,
          },
          {
-            path: '/tourist-attraction/create',
+            path: '/create-tourist-attraction',
             element: <CreateTouristAttraction />,
+         },
+         {
+            path: '/edit-tourist-attraction/:id',
+            element: <UpdateTouristAttraction />,
          },
          {
             path: 'tourist-attractions',

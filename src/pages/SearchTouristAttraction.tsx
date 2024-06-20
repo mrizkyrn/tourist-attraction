@@ -147,8 +147,10 @@ const SearchTouristAttractions = () => {
                   onChange={handleInputChange}
                   className="px-4 py-2 border border-gray-300 rounded-md"
                >
-                  <option value="">Sort by</option>
+                  <option value="" disabled>Sort By</option>
+                  <option value="name">Name</option>
                   <option value="rating">Rating</option>
+                  <option value="created_at">Created At</option>
                </select>
                <select
                   name="order"

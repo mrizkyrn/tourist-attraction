@@ -37,3 +37,34 @@ export const getDetails = async (id: number) => {
       return error.response.data;
    }
 };
+
+export const getByUsername = async (username: string) => {
+   try {
+      const response = await api.get(`/username/${username}`);
+      return response.data;
+   } catch (error: any) {
+      console.error(error.response.data);
+      return error.response.data;
+   }
+}
+
+export const update = async (id: number, formData: any) => {
+   try {
+      console.log('Update tourist attraction:', formData.get('name'));
+      const response = await api.put(`/${id}`, formData);
+      return response.data;
+   } catch (error: any) {
+      console.error(error.response.data);
+      return error.response.data;
+   }
+};
+
+export const remove = async (id: number) => {
+   try {
+      const response = await api.delete(`/${id}`);
+      return response.data;
+   } catch (error: any) {
+      console.error(error.response.data);
+      return error.response.data;
+   }
+};
