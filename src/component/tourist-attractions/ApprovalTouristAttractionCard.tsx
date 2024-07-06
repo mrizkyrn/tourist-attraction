@@ -1,5 +1,5 @@
 import React from 'react';
-import StarRating from '../StarRating';
+import { useNavigate } from 'react-router-dom';
 
 interface TouristAttraction {
    id: number;
@@ -16,11 +16,15 @@ interface TouristAttraction {
 
 interface Props {
    attraction: TouristAttraction;
+   onApprove: (id: number) => void;
+   onReject: (id: number) => void;
 }
 
-const TouristAttractionCard: React.FC<Props> = ({ attraction }) => {
+const ApprovalTouristAttractionCard: React.FC<Props> = ({ attraction, onApprove, onReject }) => {
+   const navigate = useNavigate();
+
    return (
-      <div className="bg-gray-800 p-4 rounded-md shadow-lg flex flex-col h-[550px]">
+      <div className="bg-gray-800 p-4 rounded-md shadow-lg flex flex-col h-[550px] relative">
          <img
             src={`${import.meta.env.VITE_BASE_URL}${attraction.thumbnail}`}
             alt={attraction.name}
@@ -48,17 +52,37 @@ const TouristAttractionCard: React.FC<Props> = ({ attraction }) => {
             </div>
             <div className="flex items-center mb-4">
                <span className="text-gray-400 mr-2">Rating:</span>
-               <StarRating rating={attraction.rating} />
-               <span className="text-gray-400 ml-2">({Math.round(attraction.rating * 10) / 10})</span>
+               <span className="text-yellow-400">{Array(attraction.rating).fill('★').join('')}</span>
+               <span className="text-gray-400 ml-2">({attraction.rating})</span>
             </div>
             <div className="text-gray-400">
                <p>
                   {attraction.city}, {attraction.province}
                </p>
             </div>
+            <div className="absolute top-6 right-6 flex space-x-2">
+               <button
+                  className="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-600"
+                  onClick={() => onApprove(attraction.id)}
+               >
+                  Approve
+               </button>
+               <button
+                  className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+                  onClick={() => onReject(attraction.id)}
+               >
+                  Reject
+               </button>
+            </div>
+            <button
+               className="absolute top-6 left-6 bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600"
+               onClick={() => navigate(`/approvals/${attraction.id}`)}
+            >
+               View Details
+            </button>
          </div>
       </div>
    );
 };
 
-export default TouristAttractionCard;
+export default ApprovalTouristAttractionCard;

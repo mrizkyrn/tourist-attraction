@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { logout } from '../../api/user';
-import { HomeIcon } from '../icons/Icons';
-import { FaUsers } from "react-icons/fa";
-import { FaArchway } from "react-icons/fa";
+import { FaHome, FaUsers, FaArchway, FaThList, FaStar } from 'react-icons/fa';
 import DialogAlert from '../helpers/DialogAlert';
 import Cookies from 'js-cookie';
 
@@ -18,8 +16,20 @@ const NavbarItems = (userRole: string): NavbarItem[] => {
    const items: NavbarItem[] = [
       {
          name: 'Home',
-         icon: <HomeIcon className="w-5 h-5" />,
+         icon: <FaHome className="w-5 h-5" />,
          path: '/',
+         role: 'USER',
+      },
+      {
+         name: 'Tourist Attractions',
+         icon: <FaArchway className="w-5 h-5" />,
+         path: '/tourist-attractions',
+      },
+      {
+         name: 'Favorites',
+         icon: <FaStar className="w-5 h-5" />,
+         path: '/favorites',
+         role: 'USER',
       },
       {
          name: 'User List ',
@@ -28,10 +38,11 @@ const NavbarItems = (userRole: string): NavbarItem[] => {
          role: 'ADMIN',
       },
       {
-         name: 'Tourist Attractions',
-         icon: <FaArchway className="w-5 h-5" />,
-         path: '/tourist-attractions',
-      },
+         name: 'Approval List',
+         icon: <FaThList className="w-5 h-5" />,
+         path: '/approvals',
+         role: 'ADMIN',
+      }
    ];
 
    // Filter navbar items based on user role
@@ -124,7 +135,7 @@ const Navbar: React.FC = () => {
                   onClick={() => setIsAlertOpen(true)}
                >
                   <div>
-                     <HomeIcon className="w-5 h-5" />
+                     <FaHome className="w-5 h-5" />
                   </div>
                   <span className="hidden lg:block">Logout</span>
                </button>

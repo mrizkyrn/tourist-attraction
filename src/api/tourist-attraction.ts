@@ -68,3 +68,33 @@ export const remove = async (id: number) => {
       return error.response.data;
    }
 };
+
+export const getAttractionsByStatus = async (status: string) => {
+   try {
+      const response = await api.get(`/status/${status}`);
+      return response.data;
+   } catch (error: any) {
+      console.error(error.response.data);
+      return error.response.data;
+   }
+}
+
+export const approveAttraction = async (id: number) => {
+   try {
+      const response = await api.post(`${id}/approve`);
+      return response.data;
+   } catch (error: any) {
+      console.error(error.response.data);
+      return error.response.data;
+   }
+};
+
+export const rejectAttraction = async (id: number) => {
+   try {
+      const response = await api.post(`${id}/reject`);
+      return response.data;
+   } catch (error: any) {
+      console.error(error.response.data);
+      return error.response.data;
+   }
+};

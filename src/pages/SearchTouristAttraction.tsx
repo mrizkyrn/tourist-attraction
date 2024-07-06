@@ -14,6 +14,7 @@ interface TouristAttraction {
    description: string;
    category: string;
    tags: string[];
+   entrance_fee: number;
    rating: number;
    city: string;
    province: string;
@@ -76,6 +77,8 @@ const SearchTouristAttractions = () => {
          setLoading(false);
       }
    };
+
+   console.log('Attractions:', attractions);
 
    useEffect(() => {
       fetchAttractions();
@@ -150,6 +153,7 @@ const SearchTouristAttractions = () => {
                   <option value="" disabled>Sort By</option>
                   <option value="name">Name</option>
                   <option value="rating">Rating</option>
+                  <option value="entrance_fee">Entrance Fee</option>
                   <option value="created_at">Created At</option>
                </select>
                <select

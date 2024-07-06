@@ -100,16 +100,25 @@ const Home = () => {
                   className="w-full h-96 object-cover rounded-md mb-4"
                />
 
+               <div className={`text-white text-sm font-semibold py-1 px-2 rounded-md mb-5 ${attraction.status === 'APPROVED' ? 'bg-green-500' : attraction.status === 'REJECTED' ? 'bg-red-500' : 'bg-yellow-500'}`}>
+                  {attraction.status}
+               </div>
+
                <div className="mb-6">
                   <h3 className="text-gray-300 text-lg font-semibold mb-1">Description</h3>
                   <p className="text-gray-400">{attraction.description}</p>
                </div>
-
+               
                <div className="flex flex-col gap-2 mb-6">
                   <h3 className="text-gray-300 text-lg font-semibold mb-1">Details</h3>
                   <p className="text-gray-400">
                      <span className="font-semibold text-gray-300">Category:</span> {attraction.category}
                   </p>
+                  {attraction.tags.length > 0 && (
+                     <p className="text-gray-400">
+                        <span className="font-semibold text-gray-300">Tags:</span> {attraction.tags.join(', ')}
+                     </p>
+                  )}
                   <p className="text-gray-400">
                      <span className="font-semibold text-gray-300">Entrance Fee:</span> Rp.{attraction.entrance_fee}
                   </p>
@@ -120,14 +129,25 @@ const Home = () => {
                      <span className="font-semibold text-gray-300">Address:</span> {attraction.address},{' '}
                      {attraction.city}, {attraction.province}, {attraction.country}, {attraction.postal_code}
                   </p>
-                  <p className="text-gray-400">
-                     <span className="font-semibold text-gray-300">Coordinates:</span> ({attraction.latitude},{' '}
-                     {attraction.longitude})
-                  </p>
+                  {attraction.latitude && attraction.longitude && (
+                     <p className="text-gray-400">
+                        <span className="font-semibold text-gray-300">Location:</span>{' '}
+                        <a
+                           href={`https://www.google.com/maps/search/?api=1&query=${attraction.latitude},${attraction.longitude}`}
+                           target="_blank"
+                           rel="noreferrer"
+                           className="text-blue-500 hover:underline"
+                        >
+                           View on Map
+                        </a>
+                     </p>
+                  )}
                   <p className="text-gray-400">
                      <span className="font-semibold text-gray-300">Last Updated:</span> {attraction.updated_at}
                   </p>
                </div>
+
+               
             </div>
          )}
       </Container>

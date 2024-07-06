@@ -16,6 +16,11 @@ import CreateTouristAttraction from './pages/CreateTouristAttraction.js';
 import SearchTouristAttractions from './pages/SearchTouristAttraction.js';
 import TouristAttractionDetail from './pages/TouristAttractionDetail.js';
 import UpdateTouristAttraction from './pages/UpdateTouristAttraction.js';
+import ApprovalTouristAttraction from './pages/ApprovalTouristAttraction.js';
+import Approval from './component/tourist-attractions/TouristAttractionApproval.js';
+import ApprovalHistory from './component/tourist-attractions/ApprovalHistory.js';
+import Favorites from './pages/Favorites.js';
+import ApprovalDetail from './pages/ApprovalDetail.js';
 
 const router = createBrowserRouter([
    {
@@ -52,6 +57,28 @@ const router = createBrowserRouter([
          {
             path: 'tourist-attractions/:id',
             element: <TouristAttractionDetail />,
+         },
+         {
+            path: 'approvals',
+            element: <ApprovalTouristAttraction />,
+            children: [
+               {
+                  index: true,
+                  element: <Approval />,
+               }, 
+               {
+                  path: 'history',
+                  element: <ApprovalHistory />,
+               }
+            ],
+         },
+         {
+            path: 'approvals/:id',
+            element: <ApprovalDetail />,
+         },
+         {
+            path: 'favorites',
+            element: <Favorites />,
          }
       ],
    },
