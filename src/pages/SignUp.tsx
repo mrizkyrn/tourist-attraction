@@ -17,7 +17,6 @@ const SignUp: React.FC = () => {
 
    useEffect(() => {
       if (user) {
-         console.log('User is already logged in. Redirecting to home page...');
          navigate('/');
       }
    }, [user, navigate]);

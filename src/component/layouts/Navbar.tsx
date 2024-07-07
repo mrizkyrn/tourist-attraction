@@ -61,7 +61,6 @@ const Navbar: React.FC = () => {
    const handleLogout = async () => {
       try {
          const res = await logout();
-         console.log('Logout response:', res);
 
          if (res.success) {
             Cookies.remove('user');

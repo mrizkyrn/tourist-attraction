@@ -54,8 +54,6 @@ const Favorites = () => {
       fetchFavorites();
    }, [username]);
 
-   console.log(favorites[0]);
-
    return (
       <Container>
          <h1 className="text-white text-2xl font-semibold mb-5">My Favorites</h1>

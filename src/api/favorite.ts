@@ -37,7 +37,6 @@ export const removeFavorite = async (attractionId: number) => {
 
 export const checkFavorite = async (attractionId: number) => {
    try {
-      console.log('Check favorite:', attractionId);
       const response = await api.get('/check', { params: { attraction_id: attractionId } });
       return response.data;
    } catch (error: any) {

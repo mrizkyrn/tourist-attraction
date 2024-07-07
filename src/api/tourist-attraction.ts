@@ -8,7 +8,6 @@ const api = axios.create({
 export const create = async (formData: any) => {
    try {
       const response = await api.post('/', formData);
-      console.log(response.data);
       return response.data;
    } catch (error: any) {
       console.error(error.response.data);
@@ -50,7 +49,6 @@ export const getByUsername = async (username: string) => {
 
 export const update = async (id: number, formData: any) => {
    try {
-      console.log('Update tourist attraction:', formData.get('name'));
       const response = await api.put(`/${id}`, formData);
       return response.data;
    } catch (error: any) {

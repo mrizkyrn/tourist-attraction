@@ -14,7 +14,6 @@ const SignIn: React.FC = () => {
 
    useEffect(() => {
       if (user) {
-         console.log('User is already logged in. Redirecting to home page...');
          navigate('/');
       }
    }, [user, navigate]);
@@ -34,7 +33,6 @@ const SignIn: React.FC = () => {
          if (data.success) {
             Cookies.set('user', JSON.stringify(data.data));
             Cookies.set('access_token', data.data.token);
-            console.log('User signed in successfully:', data.data);
             navigate('/');
          } else {
             toast.error(data.message, {

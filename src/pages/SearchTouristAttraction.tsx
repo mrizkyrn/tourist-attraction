@@ -52,7 +52,6 @@ const SearchTouristAttractions = () => {
    const fetchAttractions = async () => {
       setLoading(true);
       setError('');
-      console.log('Search params:', searchParams);
       try {
          const data = await search(searchParams);
          if (data.success) {
@@ -77,8 +76,6 @@ const SearchTouristAttractions = () => {
          setLoading(false);
       }
    };
-
-   console.log('Attractions:', attractions);
 
    useEffect(() => {
       fetchAttractions();
