@@ -24,6 +24,14 @@ import ApprovalDetail from './pages/ApprovalDetail.js';
 
 const router = createBrowserRouter([
    {
+      path: '/signup',
+      element: <SignUp />,
+   },
+   {
+      path: '/signin',
+      element: <SignIn />,
+   },
+   {
       element: <MainLayout />,
       children: [
          {
@@ -81,14 +89,6 @@ const router = createBrowserRouter([
             element: <Favorites />,
          }
       ],
-   },
-   {
-      path: '/signup',
-      element: <SignUp />,
-   },
-   {
-      path: '/signin',
-      element: <SignIn />,
    },
    {
       path: '*',
